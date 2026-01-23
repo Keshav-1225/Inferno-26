@@ -19,7 +19,7 @@ async function testExcel() {
             return;
         }
 
-        const sheet = workbook.getWorksheet('Registrations');
+        const sheet = workbook.getWorksheet('Inferno_Registrations_Final');
         if (!sheet) {
             console.error("Sheet 'Registrations' not found!");
             return;
