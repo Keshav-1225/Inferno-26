@@ -27,13 +27,19 @@ body {
   flex-direction: column;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0 0 1rem 0;
   font-weight: 700;
   line-height: 1.2;
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 12px;
   margin-bottom: 16px;
@@ -45,7 +51,8 @@ input, select {
   transition: all 0.3s ease;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   outline: none;
   border-color: var(--secondary-color);
   box-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
@@ -87,8 +94,15 @@ button:disabled {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .page-container {
@@ -120,6 +134,7 @@ button:disabled {
 .header h1 {
   font-size: 2.5rem;
   background: linear-gradient(to right, #ff4500, #ffae00);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;

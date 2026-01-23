@@ -25,53 +25,53 @@ export default function SuccessPage() {
                 // Colors
                 const primaryColor = [255, 69, 0]; // #ff4500
 
-                // Header
+                // Header (Reduced height 40 -> 30)
                 doc.setFillColor(...primaryColor);
-                doc.rect(0, startY, 210, 40, 'F');
+                doc.rect(0, startY, 210, 30, 'F');
 
                 doc.setTextColor(255, 255, 255);
-                doc.setFontSize(24);
+                doc.setFontSize(20); // Reduced 24 -> 20
                 doc.setFont("helvetica", "bold");
-                doc.text("INFERNO'26", 105, startY + 20, { align: 'center' });
+                doc.text("INFERNO'26", 105, startY + 15, { align: 'center' }); // Adjusted Y
 
-                doc.setFontSize(12);
+                doc.setFontSize(10); // Reduced 12 -> 10
                 doc.setFont("helvetica", "normal");
                 const title = isCopy ? "Official Registration Receipt (Copy)" : "Official Registration Receipt";
-                doc.text(title, 105, startY + 30, { align: 'center' });
+                doc.text(title, 105, startY + 24, { align: 'center' }); // Adjusted Y
 
-                // Content Start
-                let yPos = startY + 50;
+                // Content Start (Reduced gap 50 -> 36)
+                let yPos = startY + 36;
 
                 // Receipt Info
                 doc.setTextColor(0, 0, 0);
-                doc.setFontSize(10);
+                doc.setFontSize(9); // Reduced 10 -> 9
                 doc.text(`Receipt No: ${receiptId || _id || 'N/A'}`, 140, yPos);
-                doc.text(`Date: ${registrationDateFormatted || 'N/A'}`, 140, yPos + 6);
+                doc.text(`Date: ${registrationDateFormatted || 'N/A'}`, 140, yPos + 5); // Spacing 6 -> 5
 
                 // Participant Details
-                doc.setFontSize(14);
+                doc.setFontSize(12); // Reduced 14 -> 12
                 doc.setFont("helvetica", "bold");
                 doc.text("Participant Details", 14, yPos);
                 doc.line(14, yPos + 2, 80, yPos + 2);
-                yPos += 10;
+                yPos += 8; // Reduced 10 -> 8
 
-                doc.setFontSize(10);
+                doc.setFontSize(9); // Reduced 10 -> 9
                 doc.setFont("helvetica", "normal");
                 doc.text(`Name: ${name || 'N/A'}`, 14, yPos);
-                doc.text(`College: ${college || 'N/A'}`, 14, yPos + 6);
-                doc.text(`Phone: ${phone || 'N/A'}`, 14, yPos + 12);
-                doc.text(`Email: ${email || 'N/A'}`, 14, yPos + 18);
-                doc.text(`Participants: ${participantCount || 1}`, 14, yPos + 24);
+                doc.text(`College: ${college || 'N/A'}`, 14, yPos + 5);
+                doc.text(`Phone: ${phone || 'N/A'}`, 14, yPos + 10);
+                doc.text(`Email: ${email || 'N/A'}`, 14, yPos + 15);
+                doc.text(`Participants: ${participantCount || 1}`, 14, yPos + 20);
 
-                yPos += 35;
+                yPos += 28; // Reduced 35 -> 28
 
                 // Events Table
-                doc.setFontSize(14);
+                doc.setFontSize(12); // Reduced 14 -> 12
                 doc.setFont("helvetica", "bold");
                 doc.text("Registered Events", 14, yPos);
-                yPos += 5;
+                yPos += 4; // Reduced 5 -> 4
 
-                const tableColumn = ["Wing", "Competition", "Date", "Time", "Price (INR)"];
+                const tableColumn = ["Wing", "Competition", "Date", "Time", "Price"];
                 const tableRows = [];
 
                 if (events && Array.isArray(events) && events.length > 0) {
@@ -95,41 +95,42 @@ export default function SuccessPage() {
                     head: [tableColumn],
                     body: tableRows,
                     theme: 'grid',
-                    headStyles: { fillColor: primaryColor, textColor: 255 },
-                    styles: { fontSize: 10 },
-                    margin: { top: 10 },
+                    headStyles: { fillColor: primaryColor, textColor: 255, fontSize: 9 }, // Reduced font
+                    styles: { fontSize: 8, cellPadding: 2 }, // Reduced font & padding
+                    margin: { top: 10, left: 14, right: 14 },
                 });
 
                 // Payment Details
-                const finalY = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY + 15 : yPos + 20;
+                // Use a tighter gap after table
+                const finalY = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY + 10 : yPos + 15;
 
-                doc.setFontSize(12);
+                doc.setFontSize(11); // Reduced 12 -> 11
                 doc.setFont("helvetica", "bold");
                 doc.text("Payment Summary", 14, finalY);
                 doc.line(14, finalY + 2, 200, finalY + 2);
 
-                doc.setFontSize(10);
+                doc.setFontSize(9); // Reduced 10 -> 9
                 doc.setFont("helvetica", "normal");
 
-                let paymentY = finalY + 10;
+                let paymentY = finalY + 8; // Reduced 10 -> 8
                 doc.text(`Total Amount Paid:`, 14, paymentY);
                 doc.setFont("helvetica", "bold");
-                doc.text(`INR ${payment?.amount || 0}`, 60, paymentY);
+                doc.text(`INR ${payment?.amount || 0}`, 50, paymentY); // Adjusted X
 
-                paymentY += 6;
+                paymentY += 5; // Reduced 6 -> 5
                 doc.setFont("helvetica", "normal");
                 doc.text(`Payment Method:`, 14, paymentY);
-                doc.text(`${payment?.method || 'N/A'}`, 60, paymentY);
+                doc.text(`${payment?.method || 'N/A'}`, 50, paymentY);
 
                 if (payment?.method && payment?.method !== 'Cash') {
-                    paymentY += 6;
+                    paymentY += 5;
                     doc.text(`Transaction ID:`, 14, paymentY);
-                    doc.text(`${payment?.transactionId || 'N/A'}`, 60, paymentY);
+                    doc.text(`${payment?.transactionId || 'N/A'}`, 50, paymentY);
                 }
             };
 
             // Draw first copy
-            drawReceipt(0, false);
+            drawReceipt(5, false); // Start slightly lower for margins? No, start at 5 to save space top
 
             // Draw Separator Line
             doc.setLineDash([5, 5], 0);
@@ -139,7 +140,7 @@ export default function SuccessPage() {
             doc.setLineDash([]); // reset dash
 
             // Draw second copy
-            drawReceipt(halfHeight, true);
+            drawReceipt(halfHeight + 5, true);
 
             const safeName = (name || 'receipt').replace(/[^a-z0-9]/gi, '_').toLowerCase();
             doc.save(`${receiptId || safeName}_receipt.pdf`);
